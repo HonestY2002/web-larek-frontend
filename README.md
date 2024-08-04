@@ -138,22 +138,22 @@ export interface IProduct {
 
 Внутри может находиться:
 
-div class="modal__container
-div class="card card_full карточка с полным описанием товара и - кнопка в корзину
-div class="basket" - корзина со всеми выбранными товарами и кнопка оформить
-form class="form"> - форма заполнения данных покупателя и кнопка далее
-form class="form"> - форма заполнения данных покупателя и кнопка оплатить
-div class="order-success"> - извещение об успешном оформлении заказа и кнопка перехода на главную страницу
+* div class="modal__container
+* div class="card card_full карточка с полным описанием товара и - кнопка в корзину
+* div class="basket" - корзина со всеми выбранными товарами и кнопка оформить
+* form class="form"> - форма заполнения данных покупателя и кнопка далее
+* form class="form"> - форма заполнения данных покупателя и кнопка оплатить
+* div class="order-success"> - извещение об успешном оформлении заказа и кнопка перехода на главную страницу
 
 Реализация происходит путем вставления в модальное окно таких шаблонов как:
 
-template id="success">
-template id="card-catalog">
-template id="card-preview">
-template id="card-basket">
-template id="basket">
-template id="order">
-template id="contacts">
+* template id="success">
+* template id="card-catalog">
+* template id="card-preview">
+* template id="card-basket">
+* template id="basket">
+* template id="order">
+* template id="contacts">
 
 **Список всех событий, которые могут генерироваться в системе:**
 
