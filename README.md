@@ -11,9 +11,10 @@
 - src/pages/index.html — HTML-файл главной страницы
 - src/types/index.ts — файл с типами
 - src/index.ts — точка входа приложения
-- src/styles/styles.scss — корневой файл стилей
+- src/scss/styles.scss — корневой файл стилей
 - src/utils/constants.ts — файл с константами
 - src/utils/utils.ts — файл с утилитами
+- src/utils/objects.ts — файл c массивом объектов товаров
 
 ## Установка и запуск
 Для установки и запуска проекта необходимо выполнить команды
