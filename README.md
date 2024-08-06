@@ -56,17 +56,17 @@ export interface ProductData { products: Product[]; preview: string | null; addP
 4. Данные которые будут вводиться в форму и отправляться на сервер. 
 export interface UserData {payment: string; address: string; email: string; phone: string;}
 
-5. export type IPageProduct = Pick<IProduct, 'image' | 'title' | 'category' | 'price'>
+5. export type PageProduct = Pick<Product, 'image' | 'title' | 'category' | 'price'>
     
-6. export type IProductPopup = Pick<IProduct, 'image' | 'title' | 'category' | 'price' | 'description'>
+6. export type ProductPopup = Pick<Product, 'image' | 'title' | 'category' | 'price' | 'description'>
     
-7. export type IAddProduct = Pick<IProduct, 'id' | 'title' | 'price' >
+7. export type AddProduct = Pick<Product, 'id' | 'title' | 'price' >
      
-8. export type IProductOrderPrice = Pick<IProduct, 'price'> 
+8. export type ProductOrderPrice = Pick<Product, 'price'> 
     
-9. export type IOrderFormData = Pick<IOrder, 'payment' | 'address' | 'email' | 'phone'> 
+9. export type OrderFormData = Pick<Order, 'payment' | 'address' | 'email' | 'phone'> 
     
-10. export type IOrderProducts = Pick<IOrder, 'items'>
+10. export type OrderProducts = Pick<Order, 'items'>
 
     ## Архетиктура приложения
 
