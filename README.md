@@ -45,7 +45,7 @@ yarn build
 ## Данные и типы данных, используемые в приложении
 
 1. Это объект который мы получаем с сервера. Мы не можем редактировать эти данные, но можем отображать объект с помощью этих данных.
-export interface IProduct { id: string; description: string; image: string; title: string; category: string; price: number;}
+export interface Product { id: string; description: string; image: string; title: string; category: string; price: number;}
 
 2. Это объекты при выборе заказа, мы можем выбирать товары по id, также добавлять и удалять товар.
 export interface  Basket {items: Product[]; preview: string | null; total: ProductOrderPrice[]; addProduct(product: Product): void; deleteProduct(productId: string, payload: Function | null): void; getProduct(productId: string): Product;}
@@ -94,13 +94,13 @@ export interface UserData {payment: string; address: string; email: string; phon
 Класс отвечает за функционал работы с данными товара и отображением на странице и дабавлением в корзину.  
 Конструктор класса принимает брокер событий.
 
-* _products: IProduct[] - массив объектов товаров
+* _products: Product[] - массив объектов товаров
 * _preview: string | null - id товара, выбранного для просмотра в модальном окне
 * events: IEvent - экземпляр класса EventEmitter
 
 В классе доступен набор методов для взаимодействия с этими данными.
 
-* addProduct(product: IProduct): void - добавляет одну карточку товара в конец массива и вызывает событие изменения массива.
+* addProduct(product: Product): void - добавляет одну карточку товара в конец массива и вызывает событие изменения массива.
 * deleteProduct(productId: string, payload: Function | null): void - удаляет карточку из массива.
 * getProduct(productId: string): IProduct - возвращает товар по его id.
 
@@ -109,13 +109,13 @@ export interface UserData {payment: string; address: string; email: string; phon
 Класс отвечает за хранение и логику работы с данными товаров. Товары можно добавлять, удалять и посчитать стоимость товаров.
 Конструктор класса принимает брокер событий.
 
-* _products: IProduct[] - массив товаров, добавленных в корзину
+* _products: Product[] - массив товаров, добавленных в корзину
 * _preview: string | null - id товара, выбранного для удаления из корзины
 * events: IEvent - экземпляр класса EventEmitter
 
 В классе доступен набор методов для взаимодействия с этими данными.
 
-* addProduct(product: IProduct): 
+* addProduct(product: Product): 
 * deleteProduct(productId: string, payload: Function | null): void 
 * getProduct(productId: string):
 
