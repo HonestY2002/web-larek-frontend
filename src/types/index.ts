@@ -20,8 +20,7 @@ export interface Product {
         email: string;
         phone: string;
         address: string;
-        items: Basket;
-        data: UserData; 
+        items: Product[];
     }
 
     export interface productData { 
@@ -35,10 +34,9 @@ export interface Product {
     export interface  Basket { 
         items: Product[];
         preview: string | null; 
-        total: ProductOrderPrice[];
-        addProduct(product: Product): void;
-        deleteProduct(productId: string, payload: Function | null): void;
-        getProduct(productId: string): Product;
+            addProduct(product: Product): void;
+            deleteProduct(productId: string, payload: Function | null): void;
+            getProduct(productId: string): Product;
     }
 
     
