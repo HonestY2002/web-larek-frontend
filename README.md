@@ -217,20 +217,20 @@ total: ProductOrderedPrice[] - информация о сумме заказа
 
 Методы для функциональноти кномпи сохранить и вывода ошибок:
 
-submitButton: HTMLButtonElement - кнопка подтверждения
-_form: HTMLFormElement - элемент формы
-formName: string - форма имени 
-inputs: NodeListOf - поля ввода формы
-errors: Record<string, HTMLElement> - объект, который хранит элементы вывода ошибок привязанный к атрибуту name
+* submitButton: HTMLButtonElement - кнопка подтверждения
+* _form: HTMLFormElement - элемент формы
+* formName: string - форма имени 
+* inputs: NodeListOf - поля ввода формы
+* errors: Record<string, HTMLElement> - объект, который хранит элементы вывода ошибок привязанный к атрибуту name
 
 Методы:
-getValues(): Record<string, string> - возвращает объект с данными введенные пользователем
-setValues(data: Record<string, string>): void - принимает объект с данными для заполнения полей формы
-setError(data: { field: string, value: string, validInformation: string}): void - принимает объект с данными которые отображают или скрывают ошибки ввода
-showTextError (field: string, errorMessage: string): void - отоброжает текст самой оишибки
-hideError (field: string): void - очищает текст ошибки под указанным полем ввода
-setValid(isValid: boolean): void - изменяет активность кнопки подтверждения
-checkValidation - проверка на валидность всей формы
+* getValues(): Record<string, string> - возвращает объект с данными введенные пользователем
+* setValues(data: Record<string, string>): void - принимает объект с данными для заполнения полей формы
+* setError(data: { field: string, value: string, validInformation: string}): void - принимает объект с данными которые отображают или скрывают ошибки ввода
+* showTextError (field: string, errorMessage: string): void - отоброжает текст самой оишибки
+* hideError (field: string): void - очищает текст ошибки под указанным полем ввода
+* setValid(isValid: boolean): void - изменяет активность кнопки подтверждения
+* checkValidation - проверка на валидность всей формы
 
 #### Класс Product
 Отвечает за отображение товара, отрисовывает данные названия, описания, изображения, цены. Класс используется для отображения товара на главной странице, в модальном окне и в корзине. В конструктор класса передается DOM элемент template для отрисовки конкретного отображения. Слушатель событий отслеживает, на какую карточку произошел клик:
