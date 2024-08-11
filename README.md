@@ -46,7 +46,7 @@ yarn build
 
 1. Это объект который мы получаем с сервера. Мы не можем редактировать эти данные, но можем отображать объект используя эти данные interface Product { id: string; description: string; image: string; title: string; category: string; price: number;} 
  
-2. Это пустой объект корзина, мы можем удалять и добалять товар в корзину, выбирать товар по id interface  Basket {items: Product[]; preview: string | null; addProduct(product: Product): void; deleteProduct(productId: string, payload: Function | null): void; getProduct(productId: string): Product;}
+2. Это пустой объект корзина, мы можем удалять и добалять товар в корзину, выбирать товар по id. interface  Basket предназначен для определения структуры и поведения объекта который будет использоваться в коде. Также в интерфейсе Basket будут храниться элементы массива items, каждый из которых является объектом Product. Методы addProduct и deleteProduct позволяют соответственно добавить продукт в корзину и удалить его.
 
 3. interface ProductData  {это данные товаров, а также действия которые мы можем выполнять products: Product[]; preview: string | null;  это указатель на товар который мы хотим 
 посмотреть getProduct(productId: string): Product;}
@@ -54,25 +54,31 @@ yarn build
 4. Это даннные пользователя которые будут вноситься в форму, валидироваться и сохраняться в модели данных.
 interface UserData {payment: string; address: string; email: string; phone: string;  addData() добавляем данные в объект заказа checkValidation(data: Record<keyof OrderFormData, string>): boolean; делаем валидацию}
 
-5. Это пустой объект заказа который мы будем отправлять на сервер interface Order {  payment: string; email: string; phone: string; address: string; items: Product[]; getOrder(): метод возвращения с сервера данных полученных после успешной отправки заказа; setOrder(): метод сборки и отправки заказа на сервер;}
+5. Это пустой объект заказа который мы будем отправлять на сервер interface Order {payment: string; email: string; phone: string; address: string;}
 
-6. type PageProduct = Pick<Product, 'image' | 'title' | 'category' | 'price'>
+6. type PageProduct = Pick<Product, 'image' | 'title' | 'category' | 'price'> - позволяет получить данные о продукте, включая изображение, название, категорию, цену
     
-7. type ProductPopup = Pick<Product, 'image' | 'title' | 'category' | 'price' | 'description'>
+7. type ProductPopup = Pick<Product, 'image' | 'title' | 'category' | 'price' | 'description'> - позволяет получить данные о продукте, включая изображение, название, категорию, цену и описание
     
-8. type AddProduct = Pick<Product, 'id' | 'title' | 'price' >
+8. type AddProduct = Pick<Product, 'id' | 'title' | 'price' > - Позволяет получить данные о продукте по его идентификатору и сохранить их в типе данных, который определяет свойства продукта
      
-9. type ProductOrderPrice = Pick<Product, 'price'> 
+9. type ProductOrderPrice = Pick<Product, 'price'> - Здесь должна быть цена выбранного товара
     
-10. type OrderFormData = Pick<Order, 'payment' | 'address' | 'email' | 'phone'> 
+10. type OrderFormData = Pick<Order, 'payment' | 'address' | 'email' | 'phone'> - Данные, вводимые в формы при оформлении заказа
     
-11. type OrderProducts = Pick<Order, 'items'>
+11. type OrderProducts = Pick<Order, 'items'> - Список товаров, добавленных в корзину
 
 ## Архетиктура приложения
+1. Пользовательский интерфейс:
+* Главная страница: приветственное сообщение, форма поиска и список категорий товаров.
+* Страница категории: список товаров в категории, возможность добавления в корзину, кнопка оформления заказа.
+* Корзина: просмотр товаров, добавленных в корзину, общая стоимость товаров.
+* Оформление заказа: ввод адреса доставки, выбор способа оплаты, подтверждение заказа.
 
-* Слой данных отвечает за хранение и изменение данных
-* Слой представления отечает за отображение данных на странице
-* Слой связи отвечает за связь представления и данных
+2. Бэкенд:
+* База данных: хранение информации о товарах, категориях, пользователях.
+* Серверные API: обработка запросов на добавление товаров в корзину, оформление заказа, получение данных о товарах и категориях.
+* Логирование: запись действий пользователей, ошибок и предупреждений.
 
 ### Базовый код
 
@@ -106,7 +112,7 @@ interface UserData {payment: string; address: string; email: string; phone: stri
         trigger<T extends object>(event: string, context?: Partial<T>): (data: T) => void;
 }
 
-### Слой данных.
+### Пользовательский интерфейс.
 
 #### ProductData
 Класс отвечает за хранение и логику работы с данными товаров, отображаемых на странице и добавляемых в корзинку. 
@@ -118,8 +124,6 @@ interface UserData {payment: string; address: string; email: string; phone: stri
 
 В классе доступен набор методов для взаимодействия с этими данными.
 
-* addProduct(product: Product): void - добавляет массив в корзину
-* deleteProduct(productId: string, payload: Function | null): void - удаляет массив из корзины
 * getProduct(productId: string): IProduct - возвращает товар по его id.
 
 #### Класс Basket
@@ -129,14 +133,12 @@ interface UserData {payment: string; address: string; email: string; phone: stri
 Конструктор класса принимает брокер событий.
 
 * _products: Product[] - массив товаров, добавленных в корзину
-* _preview: string | null - id товара, выбранного для удаления из корзины
 * events: IEvent - экземпляр класса EventEmitter
 
 В классе доступен набор методов для взаимодействия с этими данными.
 
 * addProduct(product: Product): 
 * deleteProduct(productId: string, payload: Function | null): void 
-* getProduct(productId: string):
 
 #### Класс UserData
 
@@ -152,24 +154,6 @@ interface UserData {payment: string; address: string; email: string; phone: stri
 
 * addUserData - добавляем данные в объект данных пользователя.
 * deleteUserData - удаляем данные из объекта данных пользователя
-
-#### Класс Order 
-
-Класс отвечает за хранение и логику работы с данными заказа.
-Конструктор класса принимает инстант брокера событий.
-
-_basket: Basket[] - массив товаров, добавленных в корзину
-_userdata: UserData - объект данных с информацией о пользователе
-total: ProductOrderedPrice[] - информация о сумме заказа
-
-В классе доступен набор методов для взаимодействия с этими данными.
-
-* addOrder - Дабаляем данные в объект заказа
-* deleteOrder - Очищаем объект заказа
-* setOrder - Отправляем данные на сервер
-* getOrder - Метод возвращает данные, после успешной отправки заказа
-
-### Слой представления.
 
 #### Класс Component
 
@@ -206,16 +190,16 @@ total: ProductOrderedPrice[] - информация о сумме заказа
 
 Поля класса:
 * events: IEvents - брокер событий
-* openButton: HTMLButtonElement - кнопка отрытия модального окна
-* goFurtherButton: HTMLButtonElement - кнопка, открывающая следующее модальное окно (или завершающая заказ)
 * handleSubmit: Function - функция, которая будет выполняться после подтвеждения
 * close (): закрытие модального окна
 
 #### Класс Form 
 
+##### Класс ModalForm
+
 В классе есть возможности вводить данные, а также совершать с ними действия. Предназначен для реализации модального окна с формой, содержащей поля ввода. При клике(submit) инициирует событие, передавая в него объект с данными из полей ввода формы. При изменении данных в полях ввода инициирует событие изменения данных. Предоставляет методы для отображения ошибок и управления активностью кнопки сохранения. Наследует класс Component.
 
-Методы для функциональноти кномпи сохранить и вывода ошибок:
+Методы для функциональноти кномпки сохранить и вывода ошибок:
 
 * submitButton: HTMLButtonElement - кнопка подтверждения
 * _form: HTMLFormElement - элемент формы
@@ -230,24 +214,32 @@ total: ProductOrderedPrice[] - информация о сумме заказа
 * showTextError (field: string, errorMessage: string): void - отоброжает текст самой оишибки
 * hideError (field: string): void - очищает текст ошибки под указанным полем ввода
 * setValid(isValid: boolean): void - изменяет активность кнопки подтверждения
-* checkValidation - проверка на валидность всей формы
+
+##### Класс ModalProduct
+
+Расширяет класс Modal. Предназачен для реализации модального окна с информацией о товаре. При открытии модального окна получает данные о товаре, которые нужно показать.
+
+<!-- Поля класса (в разных модальных окнах разные комбинации):
+
+description: string;
+image: string;
+title: string;
+category: string;
+price: number  (Я так понял это дублирование и это надо будет удалить?) -->
+
+Методы:
+
+open(data: {} ): void - расширение родительского метода, принимает данные товара, которые используются для заполнения атрибутов модального окна
+close(): void - расширяет родительский метод, выполняя дополнительно очистку атрибутов модального окна.
 
 #### Класс Product
-Отвечает за отображение товара, отрисовывает данные названия, описания, изображения, цены. Класс используется для отображения товара на главной странице, в модальном окне и в корзине. В конструктор класса передается DOM элемент template для отрисовки конкретного отображения. Слушатель событий отслеживает, на какую карточку произошел клик:
-
-* id: string;
-* description: string;
-* image: string;
-* title: string;
-* category: string;
-* price: number;
-
+Отвечает за отображение товара, отрисовывает данные названия, описания, изображения, цены. Класс используется для отображения товара на главной странице, в модальном окне и в корзине. В конструктор класса передается DOM элемент template для отрисовки конкретного отображения. Слушатель событий отслеживает, на какую карточку произошел кликю.
 В классе доступен набор методов для взаимодействия с этими данными.
 
 * getter id возвращает id выбранной карточки 
 * setData(productData: Product): void - заполняет атрибуты элементов товара данными
 
-### Слой связи.
+### Бэкенд.
 
 #### Класс AppData
 

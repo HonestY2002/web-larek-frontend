@@ -20,23 +20,18 @@ export interface Product {
         email: string;
         phone: string;
         address: string;
-        items: Product[];
     }
 
     export interface productData { 
         products: Product[];
         preview: string | null; 
-        addProduct(product: Product): void;
-        deleteProduct(productId: string, payload: Function | null): void;
         getProduct(productId: string): Product;
     }
 
     export interface  Basket { 
         items: Product[];
-        preview: string | null; 
             addProduct(product: Product): void;
             deleteProduct(productId: string, payload: Function | null): void;
-            getProduct(productId: string): Product;
     }
 
     
