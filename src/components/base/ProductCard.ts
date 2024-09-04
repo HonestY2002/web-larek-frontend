@@ -1,8 +1,8 @@
-import { Component } from "./base/Component";
-import { Product} from "../types";
-import { IEvents } from "./base/events";
-import { ensureElement } from "../utils/utils";
-import { CDN_URL } from "../utils/constants";
+import { Component } from "./Component";
+import { Product } from "../../types";
+import { IEvents } from "./events";
+import { ensureElement } from "../../utils/utils";
+import { CDN_URL } from "../../utils/constants";
 
 
 export class ProductCard extends Component<Product> {

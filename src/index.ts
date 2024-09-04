@@ -1,7 +1,7 @@
 import './scss/styles.scss';
-import { ProductCard } from './components/ProductCard';
-import { Cards } from './components/DisplayCards';
-import { ProductData } from './components/ProductData';
+import { ProductCard } from './components/base/ProductCard';
+import { Cards } from './components/base/DisplayCards';
+import { ProductData } from './components/base/ProductData';
 import { EventEmitter } from './components/base/events';
 import { Modal } from './components/base/Modals';
 import { OrderData } from './components/base/Basket';
@@ -11,20 +11,18 @@ import { IApi } from './types';
 import { Payment } from './components/base/Payment';
 import { cloneTemplate, ensureElement } from './utils/utils';
 import { API_URL } from './utils/constants';
-import { Contacts } from './types';
+import { UserContacts } from './types';
 import { BasketElement } from './components/base/BascketElement';
 import { CountInBasket } from './components/base/CountInBasket';
 import { ContactsForm } from './components/base/ContactsForm';
-import { formPayment } from './types';
-import { Success } from './components/base/Success';
-
+import { UserPayments } from './types';
 
 const events = new EventEmitter();
 const baseApi: IApi = new Api(API_URL);
 const api = new AppData(baseApi);
 
 events.onAll((event) => {
-    console.log(event.eventName, event.data)
+  console.log(event.eventName, event.data)
 })
 
 const productData = new ProductData(events);
@@ -45,6 +43,7 @@ const galleryContainer = new Cards(
     ensureElement<HTMLTemplateElement>('.gallery'), events
   );
 
+  
   events.on('products:loaded', () => {
     const cardsArray = productData.products.map((card) => {
       const cardInstant = new ProductCard(cloneTemplate(cardTemplate), events);
@@ -60,13 +59,15 @@ const galleryContainer = new Cards(
   const basket = new BasketElement(cloneTemplate(basketTemplate), events);
   const cardBasketTemplate: HTMLTemplateElement = ensureElement<HTMLTemplateElement>('#card-basket');
   const basketCounter = new CountInBasket(ensureElement<HTMLTemplateElement>('.header__basket'), events);
-  const paymentTemplate: HTMLTemplateElement =
+  const paymentFormTemplate: HTMLTemplateElement =
 ensureElement<HTMLTemplateElement>('#order'); 
-const contactsTemplate: HTMLTemplateElement =
+const contactsFormTemplate: HTMLTemplateElement =
 ensureElement<HTMLTemplateElement>('#contacts'); 
-const contacts = new ContactsForm(cloneTemplate(contactsTemplate), events);
+const contacts = new ContactsForm(cloneTemplate(contactsFormTemplate), events);
 const orderData = new OrderData(events);
 orderData.basket = [];
+const successTemplate: HTMLTemplateElement = ensureElement<HTMLTemplateElement>('#success'); 
+const payments = new Payment(cloneTemplate(paymentFormTemplate), events);
 
 
 events.on('card:open', (data: { card: ProductCard}) => {
@@ -118,7 +119,6 @@ modal.render({
 })
 })
 
-const payments = new Payment(cloneTemplate(paymentTemplate), events);
 
 events.on('formPayment:open', () => {
   modal.render({
@@ -131,43 +131,34 @@ events.on('formPayment:open', () => {
   });
 });
 
-events.on(/^order\..*?:change$/, (data: { field: keyof formPayment, value: string }) => {
+events.on(/^order\..*?:change$/, (data: { field: keyof UserPayments, value: string }) => {
   orderData.setPaymentField(data.field, data.value);
 });
 
-events.on('formErrors:change', (errors: Partial<Contacts>) => {
+events.on('formErrors:change', (errors: Partial<Payment>) => {
+  const { payment, address } = errors;
+  payments.valid = !payment && !address;
+  payments.errors = Object.values({payment, address}).filter(i => !!i).join('; ');
+});
+
+
+events.on('formPayment:submit', (data) => {
+   modal.render({
+    content: contacts.render({
+      email: '',
+      phone: '',
+      valid: false,
+      errors: []
+    })
+  });
+});
+
+events.on(/^contacts\..*?:change$/, (data: { field: keyof UserContacts, value: string }) => {
+  orderData.setContactsField(data.field, data.value);
+});
+
+events.on('formErrors:change', (errors: Partial<UserContacts>) => {
   const { phone, email } = errors;
   contacts.valid = !phone && !email;
   contacts.errors = Object.values({phone, email}).filter(i => !!i).join('; ');
-});
-
-const successTemplate: HTMLTemplateElement = ensureElement<HTMLTemplateElement>('#success'); 
-
-events.on('order:send', () => {
-  
-  const orderToSend = orderData.getOrder();
-
-  api.postOrder(orderToSend)
-  .then((result) => { 
-
-    orderData.clearOrder();
-    events.emit('order:sent');                
-    basketCounter.counter = 0;
-
-    const success = new Success(cloneTemplate(successTemplate), {
-      onClick: () => {
-        console.log('что происходит в onClick ');
-        modal.close();
-      }
-    });
-
-    modal.render({
-      content: success.render({
-        total: orderToSend.total
-      })
-    });
-  })
-  .catch(err => {
-    console.error(err);
-  });
 });

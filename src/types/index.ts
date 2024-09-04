@@ -1,6 +1,6 @@
 export type ApiPostMethods = 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
-export interface Contacts {
+export interface UserContacts {
     email: string;
     phone: string;
 }
@@ -66,7 +66,7 @@ export interface Product {
         total: number;
     }
 
-    export interface formPayment {
+    export interface UserPayments {
         address: string;
         payment: string;
         

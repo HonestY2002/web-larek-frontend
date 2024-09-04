@@ -1,6 +1,6 @@
-import { cardsType } from "../types";
-import { IEvents } from "./base/events";
-import { Component } from "./base/Component";
+import { cardsType } from "../../types";
+import { IEvents } from "./events";
+import { Component } from "./Component";
 
 
 export class Cards extends Component<cardsType>{
