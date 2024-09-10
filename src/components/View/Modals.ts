@@ -1,5 +1,5 @@
-import { Component } from "./Component";
-import { IEvents } from './events';
+import { Component } from '../base/Component';
+import { IEvents } from '../base/events';
 import { ensureElement } from "../../utils/utils";
 
 interface modalData {
@@ -15,7 +15,6 @@ export class Modal extends Component<modalData> {
         this._closeButton = ensureElement<HTMLButtonElement>('.modal__close', container);
         this._content = ensureElement<HTMLElement>('.modal__content', container);
         this._closeButton.addEventListener('click', this.close.bind(this));
-        this.container.addEventListener('click', this.close.bind(this));
         this.container.addEventListener('click', (event) => {
             if (event.target === this.container) {
                 this.close();

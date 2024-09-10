@@ -1,8 +1,8 @@
-import { FormPayment } from "./PaymentForm";
-import { IEvents } from "./events";
+import { FormContacts } from "../models/FormContacts";
+import { IEvents } from "../base/events";
 import { UserContacts } from "../../types";
 
-export class ContactsForm extends FormPayment <UserContacts> {
+export class ContactsForm extends FormContacts <UserContacts> {
     constructor(container: HTMLFormElement, events: IEvents) {
         super(container, events);
             }

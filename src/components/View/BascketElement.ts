@@ -1,7 +1,7 @@
-import { Component } from "./Component";
+import { Component } from "../base/Component";
 import { createElement } from "../../utils/utils";
 import { ensureElement } from "../../utils/utils";
-import { IEvents } from "./events"; 
+import { IEvents } from "../base/events"; 
 
 interface BasketView {
     items: HTMLElement[];

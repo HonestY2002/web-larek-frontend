@@ -1,6 +1,6 @@
-import { IEvents } from "./events";
+import { IEvents } from "../base/events";
 import { UserPayments } from "../../types";
-import {FormPayment} from "./PaymentForm";
+import { FormPayment } from "../models/FormPayment";
 
 
 export class Payment extends FormPayment<UserPayments> {
@@ -17,16 +17,13 @@ export class Payment extends FormPayment<UserPayments> {
         const cardButton = this.container.elements.namedItem('card') as HTMLButtonElement;
      
         cashButton.addEventListener('click', () => {
-            console.log('кликнули на кнопку выбора способа оплаты');
             this.payment = 'cash'; 
         });
 
         cardButton.addEventListener('click', () => {
-            console.log('кликнули на кнопку выбора способа оплаты');
             this.payment = 'card'; 
         });
 
-        // Обновляем состояние кнопок
         if (value === 'cash') {
             cashButton.classList.add('button_alt-active');
             cardButton.classList.remove('button_alt-active');

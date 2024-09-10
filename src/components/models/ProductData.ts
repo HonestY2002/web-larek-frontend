@@ -1,5 +1,5 @@
 import { productData, Product } from "../../types";
-import { IEvents } from "./events";
+import { IEvents } from "../base/events";
 
 export class ProductData implements productData {
     protected _products: Product[];
@@ -19,29 +19,9 @@ export class ProductData implements productData {
         return this._products;
     }
 
-    addProduct(product: Product) {
-       this._products = [...this._products, product]
-       this.events.emit('products:changed')        
-    }
-
-    deleteProduct(productId: string, payload: Function | null = null) {
-        this._products = this._products.filter(product => product.id !== productId);
-
-        if(payload) {
-            payload();
-        } else {
-            this.events.emit('products:changed')
-        }
-    }
-
     getProduct(productId: string) {
         return this._products.find((item) => item.id === productId)
     }
-
-    getProducts() {
-        return this._products;
-      }
-    
 
     set preview(productId: string | null) {
         if (!productId) {
@@ -57,10 +37,6 @@ export class ProductData implements productData {
 
     get preview () {
         return this._preview;
-    }
-
-    getTotal() {
-        return this._products.length;
     }
 
 }

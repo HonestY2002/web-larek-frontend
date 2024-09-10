@@ -1,6 +1,6 @@
-import { Component } from "./Component";
+import { Component } from "../base/Component";
 import { Product } from "../../types";
-import { IEvents } from "./events";
+import { IEvents } from "../base/events";
 import { ensureElement } from "../../utils/utils";
 import { CDN_URL } from "../../utils/constants";
 
@@ -134,6 +134,27 @@ export class ProductCard extends Component<Product> {
             this._category.classList.remove('card__category_other', 'card__category_soft', 'card__category_hard', 'card__category_additional', 'card__category_button');
             this._category.textContent = category;      
             this.setText(this._category, category);
+
+            switch (category) {
+                case 'другое':
+                    this._category.classList.add('card__category_other');
+                    break;
+                case 'дополнительное':
+                    this._category.classList.add('card__category_additional');
+                    break;
+                case 'софт-скил':
+                    this._category.classList.add('card__category_soft');
+                    break;
+                case 'хард-скил':
+                    this._category.classList.add('card__category_hard');
+                    break;
+                case 'кнопка':
+                    this._category.classList.add('card__category_button');
+                    break;
+                default:
+                    
+                    break;
+            }
         }
     } 
 

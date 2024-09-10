@@ -1,5 +1,5 @@
 import { FormErrors } from "../../types";
-import { IEvents } from "./events";
+import { IEvents } from "../base/events";
 import { Product, UserPayments } from "../../types";
 import { UserContacts } from "../../types";
 
@@ -22,7 +22,7 @@ export class OrderData implements dataOrder {
        phone: ''
    };
    preview: string | null;
-   formErrors: FormErrors = {}; //добавить интерфейс
+   formErrors: FormErrors = {};
  
    protected events: IEvents;   
 
@@ -32,8 +32,7 @@ export class OrderData implements dataOrder {
    }
   
    set basket(basket: Product[]) {
-       this._basket = basket;
-       this.events.emit('formPayment:open')
+    this._basket = basket;
    }
 
    get basket () {
@@ -51,7 +50,7 @@ export class OrderData implements dataOrder {
        return this._basket.length;
    }
 
-   totalPrice(): number { // Изменяем метод для возврата типа number
+   totalPrice(): number { 
        return this._basket.reduce((total, product) => total + product.price, 0);
    }
 
@@ -65,6 +64,7 @@ export class OrderData implements dataOrder {
            console.log('Пользователь добавил товар в корзину.', this._basket);
 
        }
+       
    }
 
    getProducts() {
@@ -126,8 +126,8 @@ export class OrderData implements dataOrder {
    }
 
    clearOrder() {
-       this._basket = []; // Очищаем корзину
-       this.events.emit('basket:changed', this._basket); // Уведомляем об изменении корзины
+       this._basket = [];
+       this.events.emit('basket:changed', this._basket);
        console.log('Корзина очищена.', this._basket);
    }   
 

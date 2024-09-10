@@ -1,5 +1,5 @@
-import { Component } from "./Component";
-import { IEvents } from "./events";
+import { Component } from "../base/Component";
+import { IEvents } from "../base/events";
 import { ensureElement } from "../../utils/utils";
 
 
@@ -15,9 +15,9 @@ export class CountInBasket extends Component<BasketCounter>{
         super(container);
         this.events = events;
         
-        this._counter = ensureElement<HTMLElement>('.header__basket-counter', this.container);
+        this._counter = ensureElement('.header__basket-counter');
 
-        this.container.addEventListener('click', () => this.events.emit('basket:open', { basket: this}))
+        this.container.addEventListener('click', () => this.events.emit('basket:open'))
     }
 
     set counter(quantity: number) {

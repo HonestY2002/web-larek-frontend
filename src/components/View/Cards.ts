@@ -1,6 +1,6 @@
 import { cardsType } from "../../types";
-import { IEvents } from "./events";
-import { Component } from "./Component";
+import { IEvents } from "../base/events";
+import { Component } from "../base/Component";
 
 
 export class Cards extends Component<cardsType>{
@@ -13,7 +13,6 @@ export class Cards extends Component<cardsType>{
         super(container);
         this.events = events;
 
-        this._button = this.container.querySelector('.button');
         this._totalBasket = this.container.querySelector('.basket__price');
 
         if (this._button) {
