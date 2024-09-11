@@ -4,7 +4,7 @@ import { Cards } from './components/View/Cards';
 import { ProductData } from './components/models/ProductData';
 import { EventEmitter } from './components/base/events';
 import { Modal } from './components/View/Modals';
-import { OrderData } from './components/View/OrderData';
+import { OrderData } from './components/models/OrderData';
 import { Api } from './components/base/api';
 import { AppData } from './components/base/AppData';
 import { IApi } from './types';

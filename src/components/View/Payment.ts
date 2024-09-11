@@ -1,6 +1,6 @@
 import { IEvents } from "../base/events";
 import { UserPayments } from "../../types";
-import { FormPayment } from "../models/FormPayment";
+import { FormPayment } from "./FormPayment";
 
 
 export class Payment extends FormPayment<UserPayments> {
