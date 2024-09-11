@@ -1,4 +1,4 @@
-import { Component } from "../base/Component";
+import { Component } from "./Component";
 import { Product } from "../../types";
 import { IEvents } from "../base/events";
 import { ensureElement } from "../../utils/utils";
